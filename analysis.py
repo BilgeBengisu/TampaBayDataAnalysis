@@ -221,7 +221,7 @@ Now Let's plot the same thing but only have original tweets
 
 def remove_RT(df, file_name):
     # Filter out rows where the text column starts with 'RT @'
-    df = df[~df['text'].str.startswith('RT @')]
+    df = df[~df['text'].astype(str).str.startswith('RT @')]
     # Save the filtered DataFrame back to the CSV file
     df.to_csv(f"spill_data/NORT_{file_name}.csv", index=False)
     return df
