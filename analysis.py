@@ -149,12 +149,12 @@ import os
 all_files = os.listdir("spill_data")
 
 # Filter files that start with "oil"
-oil_files = [file for file in all_files if file.startswith('IndustrialSpill')]
+redtide_files = [file for file in all_files if file.startswith('RedTide')]
 
 dfs = []
 
 # Read each file and append its DataFrame to the list
-for file in oil_files:
+for file in redtide_files:
     file_path = os.path.join("spill_data", file)
     df = pd.read_csv(file_path)
     dfs.append(df)
@@ -166,7 +166,7 @@ combined_df = pd.concat(dfs, ignore_index=True)
 combined_df = combined_df.drop_duplicates()
 
 # Save the combined DataFrame to a CSV file
-#combined_df.to_csv('spill_data/All_IndustrialSpill.csv', index=False)
+combined_df.to_csv('spill_data/All_RedTide.csv', index=False)
 
 '''
 Great, now let's plot all three types of spill and label them 
