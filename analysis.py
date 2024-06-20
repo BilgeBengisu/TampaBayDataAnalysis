@@ -269,3 +269,7 @@ plt.legend()
 
 # Show plot
 plt.show()
+
+cleaned_text = pd.read_csv("/spill_data/Clean_Oil/Clean10_OilSpill.csv")
+
+print()
