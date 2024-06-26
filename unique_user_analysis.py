@@ -1,11 +1,9 @@
 import pandas as pd
-
+#https://docs.python.org/3/library/collections.html#collections.defaultdict
+from collections import defaultdict
 from wordcloud import WordCloud
 
 import matplotlib.pyplot as plt
-
-# Location words resource: https://github.com/FNeffati/TBRTD/blob/main/frontEnd/src/components/analysis.js
-# + split versions. ex: "bay", "gulf"
 
 locations = ['Gottfried Creek', 'Halifax River', 'Hamilton Branch', 'Harney River', 'Hickory Creek','Hillsborough River', 'Homosassa River', 'Hontoon Dead River', 'Ichetucknee River', 'Imperial River',
         'Itchepackesassa Creek', 'Julington Creek', 'Kissimmee River', 'Lafayette Creek',"Little Econlockhatchee River", "Little Manatee River", "Little River (Biscayne Bay)",
@@ -28,57 +26,36 @@ locations = ['Gottfried Creek', 'Halifax River', 'Hamilton Branch', 'Harney Rive
 ]
 locations = [x.lower() for x in locations]
 
-'''
-Oil
-'''
-# the words used to search for oil tweets
-oil_stop_words = ["oil", "crude", "petroleum", "tar ball", "tar balls","leak","leaks","leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage", "ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
 c_oil = pd.read_csv("spill_data/Cleaned_Files/C_All_Oil.csv")
 c_oil['text_with_display_links'] = c_oil['text_with_display_links'].astype(str)
-c_oil_tw = ' '.join(c_oil['text_with_display_links'])
+oil_stop_words = ["oil", "crude", "petroleum", "tar ball", "tar balls","leak","leaks","leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage", "ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
 
-# Generate WordCloud object
-wordcloud = WordCloud(background_color='white', collocations=False, stopwords= locations + oil_stop_words).generate(c_oil_tw)
 
-# Display the word cloud
-plt.figure(figsize=(10, 6))
-plt.imshow(wordcloud, interpolation='bilinear')
+def get_freq_unique_user(df):
+    word_freq_unique_users = defaultdict(int)
+    word_users = defaultdict(set)
+
+    for _, row in df.iterrows():  # Using "_" to ignore the index
+        username = row['username']  # unique usernames
+        text = row['text_with_display_links'] #the tweets
+
+        words = text.split()
+        for word in words:
+            word = word.lower().strip("'.,!?#$&(;")
+        # Check if this user has already used this word
+            if word not in locations or word not in oil_stop_words:
+                if username not in word_users[word]:
+                    # If not, increase the count of this word and mark this user as having used it
+                    word_freq_unique_users[word] += 1
+                    word_users[word].add(username)
+    return word_freq_unique_users
+    '''
+    for word, freq in word_freq_unique_users.items():
+        print(f"'{word}' appeared {freq} times")
+    '''
+
+oil_freq = get_freq_unique_user(c_oil)
+wc = WordCloud(background_color="white",collocations=False, stopwords = locations + oil_stop_words, max_words=1000).generate_from_frequencies(oil_freq)
+plt.imshow(wc, interpolation="bilinear")
 plt.axis("off")
-plt.title("Oil Spill Non-Geo Word Cloud")
-plt.show()
-
-'''
-Sewage
-'''
-sewage_stop_words=["sewer", "sewers", "sewage", "septic", "stormwater", "storm water", "reclaimed water", "reclaim water", "untreated", "raw", "overflow", "discharge", "discharges", "discharging", "discharged", "pump", "pumps", "pumping", "pumped", "leak", "leaks", "leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage", "dump", "dumps", "dumped", "dumping","ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
-c_sewage = pd.read_csv("spill_data/Cleaned_Files/C_All_Sewage.csv")
-c_sewage['text_with_display_links'] = c_sewage['text_with_display_links'].astype(str)
-c_sewage_tw = ' '.join(c_sewage['text_with_display_links'])
-
-# Generate WordCloud object
-wordcloud = WordCloud(background_color='white', collocations=False, stopwords=locations + sewage_stop_words).generate(c_sewage_tw)
-
-# Display the word cloud
-plt.figure(figsize=(10, 6))
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis("off")
-plt.title("Sewage Spill Non-Geo Word Cloud")
-plt.show()
-
-'''
-Industrial
-'''
-industrial_stop_words = ["wastewater","contaminants", "contamination", "contaminating", "chemical", "chemicals", "discharge", "discharges", "discharging", "discharged", "pump", "pumps", "pumping", "pumped", "leak", "leaks", "leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage","dump", "dumps", "dumped","dumping", "ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
-c_industrial = pd.read_csv("spill_data/Cleaned_Files/C_All_Industrial.csv")
-c_industrial['text_with_display_links'] = c_industrial['text_with_display_links'].astype(str)
-c_industrial_tw = ' '.join(c_industrial['text_with_display_links'])
-
-# Generate WordCloud object
-wordcloud = WordCloud(background_color='white', collocations=False, stopwords= locations + industrial_stop_words).generate(c_industrial_tw)
-
-# Display the word cloud
-plt.figure(figsize=(10, 6))
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis("off")
-plt.title("Industrial Spill Non-Geo Word Cloud")
 plt.show()
