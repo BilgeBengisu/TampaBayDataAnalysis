@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 import operator
 #https://docs.python.org/3/library/collections.html#collections.defaultdict
 from collections import defaultdict
@@ -23,40 +24,65 @@ locations = ['Gottfried Creek', 'Halifax River', 'Hamilton Branch', 'Harney Rive
         "Dunedin", "Indian Rocks Beach", "Largo", "Oldsmar", "Ozona", "Palm Harbor", "Pinellas Park","Safety Harbor", "Saint Petersburg", "Seminole", "Tarpon Springs", "Aripeka", "Crystal Springs",
         "Dade City", "Holiday", "Hudson", "Lacoochee", "Land O Lakes", "New Port Richey", "Port Richey","Saint Leo", "San Antonio", "Spring Hill", "Trilby", "Wesley Chapel", "Zephyrhills", "fl",
         "florida", "swfl", "floridas", "manateecounty", "annamariaisland", "siestakey", "stpete", "sanibel", "everglades", "fortmyersbeach","manasotakey", "sarasotabay", "fortmyers", "lakeokeechobee", "bradentonbeach",
-        "formyers", "bocagrande","siesta", "florda", "srq", "sarastoabay", "stpetersburg", "tampabay", "pinellascounty", "pineypoint", "clearwaterbeach", "capecoral", "gulfofmexico","portcharlotte","bay", "gulf","st","pete", "St.Petersburg"
+        "formyers", "bocagrande","siesta", "florda", "srq", "sarastoabay", "stpetersburg", "tampabay", "pinellascounty", "pineypoint", "clearwaterbeach", "capecoral", "gulfofmexico","portcharlotte","bay", "gulf","st","pete", "St.Petersburg", "petersburg", "mexico"
 ]
-locations = [x.lower() for x in locations]
+locations = [location.lower() for location in locations] 
+locations = [re.sub(r'[()]', '', location) for location in locations] # to remove "(" and ")"
+locations = [word for location in locations for word in location.split()]
 
+# getting & preparing the files
 c_oil = pd.read_csv("spill_data/Cleaned_Files/C_All_Oil.csv")
-c_oil['text_with_display_links'] = c_oil['text_with_display_links'].astype(str)
+c_sewage = pd.read_csv("spill_data/Cleaned_Files/C_All_Sewage.csv")
+c_industrial = pd.read_csv("spill_data/Cleaned_Files/C_All_Industrial.csv")
 oil_stop_words = ["oil", "crude", "petroleum", "tar ball", "tar balls","leak","leaks","leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage", "ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
+industrial_stop_words = ["wastewater","contaminants", "contamination", "contaminating", "chemical", "chemicals", "discharge", "discharges", "discharging", "discharged", "pump", "pumps", "pumping", "pumped", "leak", "leaks", "leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage","dump", "dumps", "dumped","dumping", "ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
+sewage_stop_words=["wastewater", "sewer", "sewers", "sewage", "septic", "stormwater", "storm water", "reclaimed water", "reclaim water", "untreated", "raw", "overflow", "discharge", "discharges", "discharging", "discharged", "pump", "pumps", "pumping", "pumped", "leak", "leaks", "leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage", "dump", "dumps", "dumped", "dumping","ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
 
 
-def get_freq_unique_user(df):
+def get_freq_unique_user(df, stop_words):
     word_freq_unique_users = defaultdict(int)
     word_users = defaultdict(set)
 
     for _, row in df.iterrows():  # Using "_" to ignore the index
         username = row['username']  # unique usernames
         text = row['text_with_display_links'] #the tweets
-
-        words = text.split()
-        for word in words:
-            word = word.lower().strip("'.,!?#$&();")
-        # Check if this user has already used this word
-            if word not in locations and word not in oil_stop_words:
-                if username not in word_users[word]:
-                    # If not, increase the count of this word and mark this user as having used it
-                    word_freq_unique_users[word] += 1
-                    word_users[word].add(username)
+        if not pd.isna(text): #accounting for float values
+            words = text.split()
+            for word in words:
+                word = word.lower().strip("'.,!?#$&();")
+            # Check if this user has already used this word
+                if word not in locations and word not in stop_words:
+                    if username not in word_users[word]:
+                        # If not, increase the count of this word and mark this user as having used it
+                        word_freq_unique_users[word] += 1
+                        word_users[word].add(username)
     dict = sorted(word_freq_unique_users.items(), key=lambda x: x[1], reverse = True)
     for word, freq in dict[0:29]:
         print(f"'{word}' appeared {freq} times")
     return word_freq_unique_users
 
 
-oil_freq = get_freq_unique_user(c_oil)
-wc = WordCloud(background_color="white",collocations=False, stopwords = locations + oil_stop_words, max_words=1000).generate_from_frequencies(oil_freq)
+# Oil
+
+oil_freq = get_freq_unique_user(c_oil, oil_stop_words)
+wc = WordCloud(background_color="white",collocations=False, max_words=1000).generate_from_frequencies(oil_freq)
 plt.imshow(wc, interpolation="bilinear")
 plt.axis("off")
+plt.title("Oil Spill Unique User Tweet Analysis")
+plt.show()
+
+# Sewage
+sewage_freq = get_freq_unique_user(c_sewage, sewage_stop_words)
+wc = WordCloud(background_color="white",collocations=False, max_words=1000).generate_from_frequencies(sewage_freq)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis("off")
+plt.title("Sewage Spill Unique User Tweet Analysis")
+plt.show()
+
+# Industrial
+sewage_freq = get_freq_unique_user(c_sewage, sewage_stop_words)
+wc = WordCloud(background_color="white",collocations=False, max_words=1000).generate_from_frequencies(sewage_freq)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis("off")
+plt.title("Industrial Spill Unique User Tweet Analysis")
 plt.show()
