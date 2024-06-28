@@ -1,4 +1,5 @@
 import pandas as pd
+import operator
 #https://docs.python.org/3/library/collections.html#collections.defaultdict
 from collections import defaultdict
 from wordcloud import WordCloud
@@ -41,18 +42,18 @@ def get_freq_unique_user(df):
 
         words = text.split()
         for word in words:
-            word = word.lower().strip("'.,!?#$&(;")
+            word = word.lower().strip("'.,!?#$&();")
         # Check if this user has already used this word
-            if word not in locations or word not in oil_stop_words:
+            if word not in locations and word not in oil_stop_words:
                 if username not in word_users[word]:
                     # If not, increase the count of this word and mark this user as having used it
                     word_freq_unique_users[word] += 1
                     word_users[word].add(username)
-    return word_freq_unique_users
-    '''
-    for word, freq in word_freq_unique_users.items():
+    dict = sorted(word_freq_unique_users.items(), key=lambda x: x[1], reverse = True)
+    for word, freq in dict[0:29]:
         print(f"'{word}' appeared {freq} times")
-    '''
+    return word_freq_unique_users
+
 
 oil_freq = get_freq_unique_user(c_oil)
 wc = WordCloud(background_color="white",collocations=False, stopwords = locations + oil_stop_words, max_words=1000).generate_from_frequencies(oil_freq)

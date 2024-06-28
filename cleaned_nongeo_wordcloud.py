@@ -25,6 +25,7 @@ locations = ['Gottfried Creek', 'Halifax River', 'Hamilton Branch', 'Harney Rive
         "Dade City", "Holiday", "Hudson", "Lacoochee", "Land O Lakes", "New Port Richey", "Port Richey","Saint Leo", "San Antonio", "Spring Hill", "Trilby", "Wesley Chapel", "Zephyrhills", "fl",
         "florida", "swfl", "floridas", "manateecounty", "annamariaisland", "siestakey", "stpete", "sanibel", "everglades", "fortmyersbeach","manasotakey", "sarasotabay", "fortmyers", "lakeokeechobee", "bradentonbeach",
         "formyers", "bocagrande","siesta", "florda", "srq", "sarastoabay", "stpetersburg", "tampabay", "pinellascounty", "pineypoint", "clearwaterbeach", "capecoral", "gulfofmexico","portcharlotte","bay", "gulf","st","pete", "St.Petersburg"
+        "petersburg", "bay", "gulf"
 ]
 locations = [x.lower() for x in locations]
 
@@ -36,21 +37,22 @@ oil_stop_words = ["oil", "crude", "petroleum", "tar ball", "tar balls","leak","l
 c_oil = pd.read_csv("spill_data/Cleaned_Files/C_All_Oil.csv")
 c_oil['text_with_display_links'] = c_oil['text_with_display_links'].astype(str)
 c_oil_tw = ' '.join(c_oil['text_with_display_links'])
-
 # Generate WordCloud object
-wordcloud = WordCloud(background_color='white', collocations=False, stopwords= locations + oil_stop_words).generate(c_oil_tw)
-
+wordcloud = WordCloud(background_color='white', collocations=False, stopwords= locations + oil_stop_words).process_text(c_oil_tw)
+print(sorted(wordcloud.items(), key=lambda x: x[1]))
 # Display the word cloud
+'''
 plt.figure(figsize=(10, 6))
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.title("Oil Spill Non-Geo Word Cloud")
 plt.show()
+'''
 
 '''
 Sewage
 '''
-sewage_stop_words=["sewer", "sewers", "sewage", "septic", "stormwater", "storm water", "reclaimed water", "reclaim water", "untreated", "raw", "overflow", "discharge", "discharges", "discharging", "discharged", "pump", "pumps", "pumping", "pumped", "leak", "leaks", "leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage", "dump", "dumps", "dumped", "dumping","ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
+sewage_stop_words=["wastewater", "sewer", "sewers", "sewage", "septic", "stormwater", "storm water", "reclaimed water", "reclaim water", "untreated", "raw", "overflow", "discharge", "discharges", "discharging", "discharged", "pump", "pumps", "pumping", "pumped", "leak", "leaks", "leaked", "leaking", "leakage", "spill", "spills", "spilled", "spilling", "spillage", "dump", "dumps", "dumped", "dumping","ocean", "beach", "beaches", "bay", "gulf", "sea", "lake", "river", "creek", "waterway"]
 c_sewage = pd.read_csv("spill_data/Cleaned_Files/C_All_Sewage.csv")
 c_sewage['text_with_display_links'] = c_sewage['text_with_display_links'].astype(str)
 c_sewage_tw = ' '.join(c_sewage['text_with_display_links'])
