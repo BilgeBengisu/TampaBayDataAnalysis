@@ -4,6 +4,7 @@ import pandas as pd
 # - media
 # - government
 # - academia
+# - tourism & business
 # - other (public)
 
 # the labeled accounts from the red tide research is being utilized and 
@@ -12,4 +13,4 @@ import pandas as pd
 nort_oil = pd.read_csv("spill_data/Cleaned_NORT_Files/C_NORT_Oil.csv")
 
 
-
+# saving the users that are yet to be labeled
