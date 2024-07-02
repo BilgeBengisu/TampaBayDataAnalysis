@@ -14,9 +14,15 @@ accounts = pd.read_csv("Final_Account_Labels_for_Dashboard.csv")
 #starting to practice with a small dataset before running on all spills combined
 nort_oil = pd.read_csv("spill_data/Cleaned_NORT_Files/C_NORT_Oil.csv", usecols=["username", "description"])
 print(nort_oil)
-nort_oil['Label'] = 'yet'
-nort_oil['Label.Type'] = 'yet'
 
-print(nort_oil)
+existing_usernames = set(accounts['username'])
+new_usernames = nort_oil[~nort_oil['username'].isin(existing_usernames)]
 
+
+print(new_usernames)
+
+new_usernames["Label"] = "yet to be set"
+new_usernames["Label.Type"] = "yet to be set"
+
+print(new_usernames)
 # saving the users that are yet to be labeled
