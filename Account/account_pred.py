@@ -24,7 +24,7 @@ tag_map['AS'] = wn.ADJ_SAT
 
 # filepath = "finalized_8K_accounts.csv"
 # filepath = "UNLABELED_accounts_emojis_replaced.csv"
-filepath = "Account/FINALIZED_Unlabeled_Data_ALL_Available_Descriptions_EMOJIS_UNCHANGED.csv"
+filepath = "Spill_Accounts_To_Be_Labeled.csv"
 hand_label = "hand.label"
 government = "gov"
 academia = "acad"
@@ -62,7 +62,8 @@ print(df['description_lemmatized'])
 
 # Removing all the empty descriptions!!!
 print(df.shape)
-print(df[df['description_lemmatized'] != ""].shape) 
+print(df[df['description_lemmatized'] != ""].shape)
+empty_rows = df[df['description_lemmatized'] == ""]
 df = df[df['description_lemmatized'] != ""]
 
 # Re-indexing the remaining observations
@@ -102,3 +103,7 @@ df['label_simplified'] = bag_of_words_y_pred_test
 df1 = pd.concat([df, pred_prob_df], axis=1)
 
 df1.to_csv('Account/SVM_BERT_unweighted_UNLABELED_PREDICTED_SPILL_accounts_W_PROBABILITIES_emojis_unchanged.csv', index=False)
+
+empty_rows['label_simplified'] = "other"
+
+print(empty_rows)
