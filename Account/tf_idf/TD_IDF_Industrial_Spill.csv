@@ -1,0 +1,21 @@
+acc_type,word,n,tf,idf,tf_idf
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",bay,2094.74041849706,[0.70173344 0.70173344 0.70173344 ... 0.25651096 0.25651096 0.89105109],1.3662669400733023,[0.9587552  0.9587552  0.9587552  ... 0.35046245 0.35046245 1.21741364]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",catastrophe,1100.9054875347058,[0.         0.         0.         ... 0.46053033 0.46053033 0.        ],2.452945311161761,[0.         0.         0.         ... 1.12965571 1.12965571 0.        ]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",glazer,1436.08452481269,[0.         0.         0.         ... 0.41254366 0.41254366 0.        ],2.1973515532614805,[0.         0.         0.         ... 0.90650345 0.90650345 0.        ]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",glazersout,1405.4586161411873,[0.         0.         0.         ... 0.39350022 0.39350022 0.        ],2.095919551573053,[0.        0.        0.        ... 0.8247448 0.8247448 0.       ]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",greed,1159.3260775472363,[0. 0. 0. ... 0. 0. 0.],2.486587627579996,[0. 0. 0. ... 0. 0. 0.]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",gulf,847.5442646150414,[0.         0.         0.         ... 0.51084511 0.51084511 0.        ],2.7209394286413224,[0.         0.         0.         ... 1.38997861 1.38997861 0.        ]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",oil,1114.4008213163809,[0. 0. 0. ... 0. 0. 0.],2.3380067516138543,[0. 0. 0. ... 0. 0. 0.]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",spill,1130.3143601787424,[0. 0. 0. ... 0. 0. 0.],2.327339983809659,[0. 0. 0. ... 0. 0. 0.]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",surprise,1949.4622887095034,[0.         0.         0.         ... 0.26133429 0.26133429 0.45390303],1.391957683366312,[0.         0.         0.         ... 0.36376628 0.36376628 0.63181381]
+"['TB_Times' 'andytaylor6' 'haltman' ... 'gibsondave51' 'KeithTatem'
+ 'TommyCardinale1']",tampa,2041.2280858789627,[0.7124396  0.7124396  0.7124396  ... 0.26042448 0.26042448 0.        ],1.3871117064201726,[0.98823331 0.98823331 0.98823331 ... 0.36123785 0.36123785 0.        ]
