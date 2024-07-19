@@ -14,8 +14,8 @@ This file visualizes the cleaned tweets via wordcloud. The respective query word
 This file visualizes the cleaned tweets via wordcloud. **The locations and** the respective query words to get the twitter data are filtered from the word pool.
 
 ## Account Folder
-This folder contains any analysis done regarding the user accounts. 
-
+This folder contains any analysis done regarding the user accounts. **ALL_Labeled_Accounts_Spill&RedTide.csv** is the file with all accounts - the most updated labeling.
+ 
 ### account_selection.py
 This file saves the accounts that havent been labeled yet from Red Tide Research to **Spill_Accounts_To_Be_Labeled.csv** 
 
