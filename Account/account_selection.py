@@ -1,11 +1,6 @@
 import pandas as pd
 
-# This program's purpose to identify the account types. The types are:
-# - media (media)
-# - government (gov)
-# - academia (acad)
-# - tourism & business (tourbiz)
-# - public & others (other)
+# This program's purpose to select the accounts that havent been labeled yet
 
 # the labeled accounts from the red tide research is being utilized
 accounts = pd.read_csv("Final_Account_Labels_for_Dashboard.csv")

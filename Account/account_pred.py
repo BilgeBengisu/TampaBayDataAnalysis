@@ -1,3 +1,10 @@
+# This program's purpose to identify the account types. The types are:
+# - media (media)
+# - government (gov)
+# - academia (acad)
+# - tourism & business (tourbiz)
+# - public & others (other)
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import cross_val_predict, train_test_split, GridSearchCV
