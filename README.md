@@ -27,5 +27,5 @@ This jupyter notebook modified from Red Tide Research has two extra sections: **
 #### Relabeling "other" rows
 The users to be relabeled were stored in **Accounts_To_Relabel.csv** by extracting the "other" labeled rows if they had a different prediction column where the probability is higher than 0.3. Relabeling was done manually by Prof. Skripnikov and is stored in **Final_Account_Relabeling.csv**
 #### TF-IDF
-In this section, the file is processed to get the first 3 columns in the photo below for every account type in each spill type. Later, these files are merged together in their respective spill types to be fed to tf-idf.
+In this section, the file is processed to get the first 3 columns in the photo below for every account type in each spill type. Later, these files are merged together in their respective spill types to be fed to tf-idf. The merged file is in the **merged_tf_idf** folder. Individual files in the merged result are stored in **not_merged_tf_idf** and result from the tf_idf_preprocessing() function in the jupyter notebook. TF-IDF wordcloud was attempted but didn't result in outcome.
 ![tf-idf](Account/tf_idf/tf-idf.png)
