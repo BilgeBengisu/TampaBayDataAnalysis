@@ -14,8 +14,8 @@ This file visualizes the cleaned tweets via wordcloud. The respective query word
 This file visualizes the cleaned tweets via wordcloud. **The locations and** the respective query words to get the twitter data are filtered from the word pool.
 
 ## Account Folder
-This folder contains any analysis done regarding the user accounts. 
-
+This folder contains any analysis done regarding the user accounts. **ALL_Labeled_Accounts_Spill&RedTide.csv** is the file with all accounts - the most updated labeling.
+ 
 ### account_selection.py
 This file saves the accounts that havent been labeled yet from Red Tide Research to **Spill_Accounts_To_Be_Labeled.csv** 
 
@@ -27,4 +27,5 @@ This jupyter notebook modified from Red Tide Research has two extra sections: **
 #### Relabeling "other" rows
 The users to be relabeled were stored in **Accounts_To_Relabel.csv** by extracting the "other" labeled rows if they had a different prediction column where the probability is higher than 0.3. Relabeling was done manually by Prof. Skripnikov and is stored in **Final_Account_Relabeling.csv**
 #### TF-IDF
-![alt text](https://github.com/bilgebengisu/TampaBayDataAnalysis/Account/tf_idf/tf-idf.pngraw=true)
+In this section, the file is processed to get the first 3 columns in the photo below for every account type in each spill type. Later, these files are merged together in their respective spill types to be fed to tf-idf.
+![tf-idf](Account/tf_idf/tf-idf.png)
